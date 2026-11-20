@@ -1,0 +1,28 @@
+
+name: MATLAB Simulink CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  simulink-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Setup MATLAB and Simulink
+        uses: matlab-actions/setup-matlab@v3
+        with:
+          products: Simulink
+
+      - name: Run Simulink Model Test
+        uses: matlab-actions/run-command@v3
+        with:
+          command: addpath('scripts'); ci_smoke_test
+
